@@ -11,9 +11,11 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';
 
-
 //Rutas
 import { APP_ROUTES } from './app.routes';
+
+//Servicios
+import { ServiceModule } from './services/service.module';
 
 
 
@@ -29,9 +31,13 @@ import { APP_ROUTES } from './app.routes';
     BrowserModule,
     PageModule,    
     APP_ROUTES,
-    FormsModule
+    FormsModule,
+    ServiceModule
+
   ],
-  providers: [],
+  providers: [
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
