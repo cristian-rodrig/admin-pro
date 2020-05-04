@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { UsuarioService } from '../services/service.index';
+import { Usuario } from '../models/usuario.model';
+import Swal from 'sweetalert2';
+
+declare const gapi: any;
 
 @Component({
   selector: 'app-login',
@@ -8,13 +14,83 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public router: Router) { }
+  recuerdame: boolean = false;
+  email: string;
+
+  auth2: any;
+
+  constructor(public router: Router,
+              public usuarioService: UsuarioService) { }
+
 
   ngOnInit(): void {
+   this.googleInit();
+        
+    //recordar usuario localstorage
+    this.email = localStorage.getItem('email') || '';
+      if( this.email.length>0) {
+        this.recuerdame = true;
+    }
   }
 
-  ingresar(){
-    this.router.navigate(['/dashboard']);
+  googleInit(){
+
+    gapi.load('auth2', () => {
+
+      this.auth2 = gapi.auth2.init({
+        client_id: '395248981281-h1s7g7atei44lqvmv0nn9u0njh8pq0a1.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        scope: 'profile email'
+      });
+
+      this.attachSignin(document.getElementById('btnGoogle'));
+    });
+  }
+
+  //Google
+  attachSignin(elemento){
+    this.auth2.attachClickHandler( elemento, {} ,(googleUser) =>{
+        
+     // let profile = googleUser.getBasicProfile();
+     let token = googleUser.getAuthResponse().id_token;
+      console.log(token);
+
+      this.usuarioService.loginGoogle(token)
+        .subscribe( resp =>{
+          console.log(resp);
+
+          Swal.fire('Correctamente logueado', 
+              'en Google',
+              "success");
+        
+            })
+        window.location.href = "'#/dashboard";
+        //this.router.navigate(['/dashboard'])
+    });
+  }
+
+   
+  
+
+  ingresar( forma: NgForm){
+
+    if(forma.invalid){
+      return;
+    }
+
+    let usuario = new Usuario( null, forma.value.email, forma.value.password);
+
+    this.usuarioService.login(usuario, forma.value.recuerdame)
+      .subscribe( correcto  =>{       
+        Swal.fire('Logueado', 
+              'Correctamente',
+              "success");
+        window.location.href = "'#/dashboard";
+        //this.router.navigate(['/dashboard'])
+      });    
+    
+    console.log(forma.value);
+
   }
 
 }

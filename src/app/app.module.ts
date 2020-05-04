@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 // Modulos
 import { NgModule } from '@angular/core';
 import { PageModule } from'./pages/pages.module'
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
@@ -32,6 +32,7 @@ import { ServiceModule } from './services/service.module';
     PageModule,    
     APP_ROUTES,
     FormsModule,
+    ReactiveFormsModule,
     ServiceModule
 
   ],
