@@ -124,7 +124,7 @@ export class UsuarioService {
 
       } 
 
-      Swal.fire('Usuario Actializado',
+      Swal.fire('Usuario Actuializado',
                 usuario.nombre,
                 "success");
        

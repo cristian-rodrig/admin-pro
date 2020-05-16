@@ -60,11 +60,15 @@ export class ModalUploadComponent implements OnInit {
     
     this._subirArchivoService.subirArchivo(this.imagenSubir, this._modalUploadService.tipo,
                                            this._modalUploadService.id)
-            .then( (resp: any) =>{ 
+            .then ((resp: any) =>{ 
                            
               this._modalUploadService.notificacion.emit( resp);
+              Swal.fire('Imagen',
+              'subida correctamente', 
+              'success');    
+              
               this.cerrarModal();
-
+              
             })
             .catch(resp =>{
               console.error('Error en la carga',resp);
@@ -73,8 +77,8 @@ export class ModalUploadComponent implements OnInit {
 
   
   cerrarModal(){
-    this.imagenTemp = null;
-    this.subirImagen = null;
+    // this.imagenTemp = null;
+    // this.subirImagen = null;
 
     this._modalUploadService.ocultarModal();
   }
