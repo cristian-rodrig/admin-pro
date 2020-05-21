@@ -74,7 +74,6 @@ export class MedicoComponent implements OnInit {
   }
 
   cambiarFoto(){
-
     this._modalUploadService.mostrarModal('medicos', this.medico._id)
   }
 

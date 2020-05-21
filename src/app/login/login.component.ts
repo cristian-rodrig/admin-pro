@@ -6,6 +6,8 @@ import { Usuario } from '../models/usuario.model';
 import Swal from 'sweetalert2';
 
 declare const gapi: any;
+declare function init_plugins();
+
 
 @Component({
   selector: 'app-login',
@@ -19,11 +21,13 @@ export class LoginComponent implements OnInit {
 
   auth2: any;
 
+
   constructor(public router: Router,
               public usuarioService: UsuarioService) { }
 
 
   ngOnInit(): void {
+    init_plugins();
    this.googleInit();
         
     //recordar usuario localstorage

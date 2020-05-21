@@ -34,3 +34,7 @@
 .oculto{
     display: none;
 }
+
+.ti-user .ti-email{
+    padding: 10px;
+}
