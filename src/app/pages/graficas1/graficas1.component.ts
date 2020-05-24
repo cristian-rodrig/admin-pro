@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
-
 @Component({
   selector: 'app-graficas1',
   templateUrl: './graficas1.component.html',
-  styles: [
-  ],
+  styles: []
 })
 export class Graficas1Component implements OnInit {
 
-  
+
   graficos: any = {
     'grafico1': {
       'labels': ['Con Frijoles', 'Con Natilla', 'Con tocino'],
@@ -27,19 +25,19 @@ export class Graficas1Component implements OnInit {
       'labels': ['Si', 'No'],
       'data':  [95, 5],
       'type': 'doughnut',
-      'leyenda': 'Â¿Le dan gases los frijoles?'
+      'leyenda': '¿Le dan gases los frijoles?'
     },
     'grafico4': {
       'labels': ['No', 'Si'],
       'data':  [85, 15],
       'type': 'doughnut',
-      'leyenda': 'Â¿Le importa que le den gases?'
+      'leyenda': '¿Le importa que le den gases?'
     },
   };
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }

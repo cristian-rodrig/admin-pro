@@ -5,81 +5,81 @@ import { MedicoService } from '../../services/service.index';
 @Component({
   selector: 'app-medicos',
   templateUrl: './medicos.component.html',
-  styles: [
-  ],
+  styles: []
 })
 export class MedicosComponent implements OnInit {
 
   medicos: Medico[] = [];
-
   desde: number = 0;
 
   totalRegistros: number = 0;
+  cargando: boolean = true;
 
-  cargando: boolean=true;
+  constructor(
+    public _medicoService: MedicoService
+  ) { }
 
-  constructor(public _medicoService : MedicoService) { }
-
-  ngOnInit(): void {
+  ngOnInit() {
     this.cargarMedicos();
   }
 
- 
+  // cargarMedicos() {
+  //   this._medicoService.cargarMedicos()
+  //         .subscribe( medicos => this.medicos = medicos );
+  // }
 
-  
-  editarMedico(medico: Medico){
+  cargarMedicos() {
+
+    this.cargando = true;
+
+    this._medicoService.cargarMedicos( this.desde )
+              .subscribe( (resp: any) => {
+                console.log(resp)
+                this.totalRegistros = resp.totalMedicos;
+                this.medicos = resp.medicos;
+                console.log(this.medicos)
+                this.cargando = false;
+
+              });
 
   }
 
-  borrarMedico(medico: Medico){
-    this._medicoService.borrarMedico(medico._id).
-        subscribe( () => this.cargarMedicos());
-  }
-  
 
-  buscarMedico(termino: string){
-    if(termino.length <= 0){
+
+
+  buscarMedico( termino: string ) {
+
+    if ( termino.length <= 0 ) {
       this.cargarMedicos();
       return;
     }
-    this._medicoService.buscarMedicos(termino)
-        .subscribe( medicos => this.medicos = medicos);
+
+    this._medicoService.buscarMedicos( termino )
+            .subscribe( medicos =>  this.medicos = medicos );
   }
 
-//  cargarMedicos(){
-//   this.cargando = true;
-//     this._medicoService.cargarMedicos()
-//         .subscribe( medicos => this.medicos = medicos );
-    
-    
-        
-//   }
+  borrarMedico( medico: Medico ) {
 
-  cargarMedicos(){
-    this.cargando = true;
-    this._medicoService.cargarMedicos(this.desde)
-            .subscribe((medicos:any) =>{
-              this.medicos = medicos
-              
-              this.totalRegistros=medicos.totalUsuarios;
-             
-              // this.medicos= medicos.medico;
-              this.cargando = false;
-            });
+    this._medicoService.borrarMedico( medico._id )
+            .subscribe( () =>  this.cargarMedicos() );
+
   }
 
-  cambiarDesde(valor: number){
-    
+  cambiarDesde( valor: number ) {
+
     let desde = this.desde + valor;
-    console.log(desde);
 
-    if(desde >= this.totalRegistros){
+    if ( desde >= this.totalRegistros ) {
       return;
     }
-    if(desde < 0){
+
+    if ( desde < 0 ) {
       return;
     }
+
     this.desde += valor;
     this.cargarMedicos();
+
   }
+
 }

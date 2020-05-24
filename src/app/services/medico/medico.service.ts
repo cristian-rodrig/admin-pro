@@ -1,14 +1,11 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { URL_SERVICIOS } from '../../config/config';
 import { UsuarioService } from '../usuario/usuario.service';
+import { Medico } from '../../models/medico.model';
 import Swal from 'sweetalert2';
-import { Medico } from 'src/app/models/medico.model';
-import { identifierModuleUrl } from '@angular/compiler';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class MedicoService {
 
   totalMedicos: number = 0;
@@ -18,66 +15,88 @@ export class MedicoService {
     public _usuarioService: UsuarioService
   ) { }
 
-  cargarMedicos(desde: number =0){
-    let url = URL_SERVICIOS + '/medico?desde=' + desde;
+  cargarMedicos(desde: number =0) {
 
-    return this.http.get(url)
-        .map((resp : any) =>{
-            
-          this.totalMedicos = resp.totalMedicos;
-        
-          return resp.medicos;
-          
-        });
+    let url = URL_SERVICIOS + '/medico?desde=' + desde;
+    
+    return this.http.get( url )
+    
+
   }
 
+  // cargarMedicos(desde: number =0){
+  //   let url = URL_SERVICIOS + '/medico?desde=' + desde;
 
-  buscarMedicos( termino: string){
+  //   return this.http.get(url)
+  //       .map((resp : any) =>{
+  //           console.log(resp)
+  //         this.totalMedicos = resp.totalMedicos;
+        
+  //         return resp.medicos;
+          
+  //       });
+  // }
+
+  cargarMedico( id: string ) {
+
+    let url = URL_SERVICIOS + '/medico/' + id;
+
+    return this.http.get( url )
+              .map( (resp: any) => resp.medico );
+            
+
+  }
+
+  buscarMedicos( termino: string ) {
+
     let url = URL_SERVICIOS + '/busqueda/coleccion/medicos/' + termino;
     return this.http.get( url )
-          .map( (resp:any) => resp.medicos);
+                .map( (resp: any) => resp.medicos );
+
   }
 
-  borrarMedico(id: string){
-    let url = URL_SERVICIOS + '/medico/' + id ;  
+  borrarMedico( id: string ) {
+
+    let url = URL_SERVICIOS + '/medico/' + id;
     url += '?token=' + this._usuarioService.token;
-    
-    return this.http.delete(url)
-        .map( (resp:any) => Swal.fire('Medico Borrado', 'Eliminado Correctamente', 'success')); 
-        
-   }
 
-   guardarMedico(medico: Medico){
+    return this.http.delete( url )
+              .map( resp => {
+                Swal.fire( 'Médico Borrado', 'Médico borrado correctamente', 'success' );
+                return resp;
+              });
 
-    let url= URL_SERVICIOS + '/medico';
+  }
 
-    if(medico._id){
-    //actualizando
-    url+= '/' + medico._id;
-    url += '?token=' + this._usuarioService.token;         
+  guardarMedico( medico: Medico ) {
 
-    return this.http.put( url, medico)
-        .map( (resp: any) =>{
-          Swal.fire('Medico actualizado', medico.nombre, 'success');
-          return resp.medico;
-        });
+    let url = URL_SERVICIOS + '/medico';
 
-    }else{
-      //creando
-      url += '?token=' + this._usuarioService.token;         
-      return this.http.post(url, medico)
-        .map( (resp : any) =>{
-          Swal.fire('Medico creado', medico.nombre, 'success');
-          return resp.medico;
-        });
+    if ( medico._id ) {
+      // actualizando
+      url += '/' + medico._id;
+      url += '?token=' + this._usuarioService.token;
 
+      return this.http.put( url, medico )
+                .map( (resp: any) => {
+                  Swal.fire('Médico Actualizado', medico.nombre, 'success');
+                  return resp.medico;
+
+                });
+
+    }else {
+      // creando
+      url += '?token=' + this._usuarioService.token;
+      return this.http.post( url, medico )
+              .map( (resp: any) => {
+                Swal.fire('Médico Creado', medico.nombre, 'success');
+                return resp.medico;
+              });
     }
-   }
 
-   cargarMedico( id: string){
-     let url = URL_SERVICIOS +'/medico/' + id;
-     return this.http.get(url)
-       .map((resp: any) => resp.medico);
-   }
+
+
+
+  }
 
 }

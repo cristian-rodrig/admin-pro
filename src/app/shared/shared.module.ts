@@ -1,34 +1,40 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 
-import { CommonModule } from '@angular/common';
+// Pipes
+import { PipesModule } from '../pipes/pipes.module';
+
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { HeaderComponent } from './header/header.component';
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-
-//pipes
-import { PipesModule } from '../pipes/pipes.module';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 
 
 @NgModule({
+    imports: [
+        RouterModule,
+        CommonModule,
+        PipesModule,
+        
+    ],
     declarations: [
         NopagefoundComponent,
         HeaderComponent,
         SidebarComponent,
-        BreadcrumbsComponent
-    ],
-    imports: [ 
-        CommonModule,
-        RouterModule,
-        PipesModule
+        BreadcrumbsComponent,
+        NopagefoundComponent,
+       // ModalUploadComponent
     ],
     exports: [
         NopagefoundComponent,
         HeaderComponent,
         SidebarComponent,
-        BreadcrumbsComponent
-    ],
-    providers: [],
+        BreadcrumbsComponent,
+        NopagefoundComponent,
+        //ModalUploadComponent
+    ]
 })
-export class SharedModule {}
+export class SharedModule { }

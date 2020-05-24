@@ -1,5 +1,5 @@
-import { SidebarService } from './services/shared/sidebar.service';
 import { Component } from '@angular/core';
+
 import { SettingsService } from './services/service.index';
 
 @Component({
@@ -8,9 +8,8 @@ import { SettingsService } from './services/service.index';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'adminpro';
 
-  constructor(public _ajustes:SettingsService){
-        
-  }
+  constructor( public _ajustes: SettingsService ) {}
+
 }
+

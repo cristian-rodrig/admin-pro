@@ -1,8 +1,7 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ModalUploadService {
 
   public tipo: string;
@@ -12,19 +11,18 @@ export class ModalUploadService {
 
   public notificacion = new EventEmitter<any>();
 
-  constructor() {
-    console.log('modal uploadservice works')
-   }
+  constructor() { }
 
-   ocultarModal(){
+  ocultarModal() {
     this.oculto = 'oculto';
-    this.tipo =null;
-    this.id=null;
-   }
+    this.tipo = null;
+    this.id = null;
+  }
 
-   mostrarModal(tipo: string, id: string){
-     this.oculto = '';
-     this.id=id;
-     this.tipo=tipo;
-   }
+  mostrarModal( tipo: string, id: string ) {
+    this.oculto = '';
+    this.id = id;
+    this.tipo = tipo;
+  }
+
 }

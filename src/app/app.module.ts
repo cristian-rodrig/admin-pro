@@ -1,46 +1,45 @@
 import { BrowserModule } from '@angular/platform-browser';
-
-// Modulos
 import { NgModule } from '@angular/core';
-import { PageModule } from'./pages/pages.module'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
-import { AppComponent } from './app.component';
-//Componentes
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './login/register.component';
-
-//Rutas
+// Rutas
 import { APP_ROUTES } from './app.routes';
 
-//Servicios
+// Modulos
+import { PagesModule } from './pages/pages.module';
+
+// temporal
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+// Servicios
 import { ServiceModule } from './services/service.module';
 
 
 
 
+// Componentes
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './login/register.component';
+import { PagesComponent } from './pages/pages.component';
+import { SharedModule } from './shared/shared.module';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
-    
-    
-    
-    ],
+    RegisterComponent,
+    //PagesComponent
+  ],
   imports: [
     BrowserModule,
-    PageModule,    
     APP_ROUTES,
+    PagesModule,
     FormsModule,
     ReactiveFormsModule,
-    ServiceModule
-
+    ServiceModule,
+    //SharedModule
   ],
-  providers: [
-    
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
